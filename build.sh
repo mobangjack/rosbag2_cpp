@@ -11,8 +11,8 @@ fi
 build_base="$PWD/build/$ANDROID_ABI"
 install_base="$PWD/install/$ANDROID_ABI"
 
-if [ -n "$@" ]; then
-    packages_select="--packages-select $@"
+if [ -n "$*" ]; then
+    packages_select="--packages-select $*"
 else
     packages_select=""
 fi
@@ -27,7 +27,7 @@ colcon build \
     --packages-ignore rosbag2_test_common \
     --packages-ignore rosbag2_tests \
     --packages-ignore rosbag2_transport \
-    "$packages_select" \
+    $packages_select \
     --cmake-args \
         --no-warn-unused-cli \
         -DPYTHON_EXECUTABLE=/usr/bin/python3 \
