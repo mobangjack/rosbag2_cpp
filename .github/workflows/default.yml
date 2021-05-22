@@ -1,0 +1,24 @@
+name: build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+  strategy:
+      matrix:
+        ANDROID_ABI: [armeabi-v7a, arm64-v8a]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: docker login
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+    - name: build
+      run: |
+        export ANDROID_ABI=${{ matrix.ANDROID_ABI }}
+        ./docker_run.sh ./import-src.sh
+        ./docker_build.sh
+        ./pack.sh
+    - uses: actions/upload-artifact@v2
+      with:
+        name: librosbag2-dev-${{ matrix.ANDROID_ABI }}
+        path: release/${{ matrix.ANDROID_ABI }}/librosbag2-dev-${{ matrix.ANDROID_ABI }}.tar.gz
