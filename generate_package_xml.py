@@ -38,8 +38,9 @@ def strip_trailing_slash(s):
 def generate_one(path):
     dst = os.path.join(path, 'package.xml')
     if os.path.isfile(dst):
-        print('{} exists'.format(dst))
+        print('%s exists' % dst)
         return
+    print("generate %s" % dst)
     path = strip_trailing_slash(path)
     name = os.path.basename(path)
     xml = generate_string(name)

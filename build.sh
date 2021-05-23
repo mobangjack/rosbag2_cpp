@@ -2,6 +2,8 @@
 
 cd $(dirname $0)
 
+set -e
+
 # android build configuration
 if [ -z "$ANDROID_ABI" ]; then
     export ANDROID_ABI=armeabi-v7a
@@ -11,13 +13,31 @@ fi
 build_base="$PWD/build/$ANDROID_ABI"
 install_base="$PWD/install/$ANDROID_ABI"
 
-if [ -n "$*" ]; then
-    packages_select="--packages-select $*"
+sed_append() {
+    ref="$1"
+    line="$2"
+    file="$3"
+    grep "$line" "$file"
+    if [ $? -ne 0 ]; then
+        sed -i "/${ref}/a\\${line}" "$file"
+    fi
+}
+
+# magic operations
+magic_ops() {
+    ./generate_package_xml.py base.yml
+    sed_append "<buildtool_depend>ament_cmake<\/buildtool_depend>" "<depend>yaml_cpp</depend>" src/ros2/yaml_cpp_vendor/package.xml
+    sed -i "s/build_yaml_cpp()/find_package(yaml_cpp)/g" src/ros2/yaml_cpp_vendor/CMakeLists.txt
+    sed -i "s/stdc++fs//g" src/ros/pluginlib/pluginlib/CMakeLists.txt
+    sed -i "s/stdc++fs//g" src/ros/pluginlib/pluginlib/pluginlib-extras.cmake
+}
+
+if [ $# -gt 0 ]; then
+    packages_select="--packages-select $@"
 else
     packages_select=""
+    magic_ops
 fi
-
-./generate_package_xml.py base.yml
 
 colcon build \
     --merge-install \
