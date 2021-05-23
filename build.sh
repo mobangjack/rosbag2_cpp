@@ -17,6 +17,8 @@ else
     packages_select=""
 fi
 
+./generate_package_xml.py base.yml
+
 colcon build \
     --merge-install \
     --build-base "$build_base" \
