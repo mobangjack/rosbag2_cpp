@@ -9,7 +9,7 @@ if [ $(id -u) != 0 ]; then
     subcmd="groupadd -g $(id -g) $(id -ng)"
     subcmd="$subcmd && useradd -u $(id -u) -g $(id -g) -md $HOME -s /bin/bash $USER"
     subcmd="$subcmd && chown $(id -u):$(id -g) $HOME"
-    subcmd="$subcmd && su - $USER"
+    subcmd="$subcmd && su $USER"
     cmd="$cmd && $subcmd"
 fi
 
@@ -29,4 +29,6 @@ else
 fi
 
 image=mobangjack/colcon-ndk:latest
+
+set -x
 docker run -v $PWD:$PWD $option $image bash -c "$cmd"
