@@ -51,7 +51,7 @@ colcon build \
     --packages-ignore ros2bag \
     --packages-ignore rosbag2 \
     --packages-ignore rosbag2_converter_default_plugins \
-    --packages-ignore rosbag2_test_common \
+    --packages-skip rosbag2_test_common \
     --packages-ignore rosbag2_tests \
     --packages-ignore rosbag2_transport \
     $packages_select \

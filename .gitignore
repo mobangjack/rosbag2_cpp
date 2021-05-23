@@ -1,2 +1,5 @@
 /src
+/build
+/install
 /release
+/log
