@@ -35,7 +35,8 @@ magic_ops() {
         src/ros2/rosbag2/rosbag2_transport/COLCON_IGNORE \
         src/ros2/rosbag2/rosbag2_tests/COLCON_IGNORE \
         src/ros2/rosbag2/rosbag2_test_common/COLCON_IGNORE \
-        src/ros2/rosbag2/rosbag2_converter_default_plugins/COLCON_IGNORE
+        src/ros2/rosbag2/rosbag2_converter_default_plugins/COLCON_IGNORE \
+        src/ros2/rosbag2/shared_queues_vendor/COLCON_IGNORE
 }
 
 if [ $# -gt 0 ]; then
