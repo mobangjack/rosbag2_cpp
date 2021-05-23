@@ -1,16 +1,18 @@
 #!/bin/bash
 
-set -e
-set -x
+cd $(dirname $0)
 
 if [ -z "$ARCH" ]; then
     export ARCH="arm"
 fi
 
+set -e
+set -x
+
 install_base="$PWD/install/$ARCH"
 
 pushd "$install_base"
-tar -cfz "librosbag2-dev-${ARCH}.tar.gz" *
+tar -vczf "librosbag2-dev-${ARCH}.tar.gz" *
 popd
 
 release_dir="$PWD/release/$ARCH"
