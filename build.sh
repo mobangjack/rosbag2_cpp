@@ -39,4 +39,5 @@ colcon build \
         -DANDROID_NDK="${ANDROID_NDK}" \
         -DANDROID_STL=c++_static \
         -DBUILD_TESTING:BOOL=OFF \
+        -DBUILD_SHARED_LIBS:BOOL=ON \
         -DCMAKE_FIND_ROOT_PATH="$install_base"
