@@ -2,12 +2,17 @@
 
 cd $(dirname $0)
 
-set -e
-
 # android build configuration
 if [ -z "$ANDROID_ABI" ]; then
     export ANDROID_ABI=armeabi-v7a
-    export ANDROID_NATIVE_API_LEVEL=23
+fi
+
+if [ -z "$ANDROID_NATIVE_API_LEVEL" ]; then
+    if [ "$ANDROID_ABI" == "armeabi-v7a" ]; then
+        export ANDROID_NATIVE_API_LEVEL=23
+    else
+        export ANDROID_NATIVE_API_LEVEL=28
+    fi
 fi
 
 build_base="$PWD/build/$ANDROID_ABI"
