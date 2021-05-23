@@ -35,6 +35,15 @@ magic_ops() {
     sed -i "s/build_yaml_cpp()/find_package(yaml_cpp)/g" src/ros2/yaml_cpp_vendor/CMakeLists.txt
     sed -i "s/stdc++fs//g" src/ros/pluginlib/pluginlib/CMakeLists.txt
     sed -i "s/stdc++fs//g" src/ros/pluginlib/pluginlib/pluginlib-extras.cmake
+
+
+    touch \
+        src/ros2/rosbag2/rosbag2/COLCON_IGNORE \
+        src/ros2/rosbag2/ros2bag/COLCON_IGNORE \
+        src/ros2/rosbag2/rosbag2_transport/COLCON_IGNORE \
+        src/ros2/rosbag2/rosbag2_tests/COLCON_IGNORE \
+        src/ros2/rosbag2/rosbag2_test_common/COLCON_IGNORE \
+        src/ros2/rosbag2/rosbag2_converter_default_plugins/COLCON_IGNORE
 }
 
 if [ $# -gt 0 ]; then
@@ -48,12 +57,6 @@ colcon build \
     --merge-install \
     --build-base "$build_base" \
     --install-base "$install_base" \
-    --packages-ignore ros2bag \
-    --packages-ignore rosbag2 \
-    --packages-ignore rosbag2_converter_default_plugins \
-    --packages-skip rosbag2_test_common \
-    --packages-ignore rosbag2_tests \
-    --packages-ignore rosbag2_transport \
     $packages_select \
     --cmake-args \
         --no-warn-unused-cli \
