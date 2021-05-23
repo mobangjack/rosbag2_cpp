@@ -17,6 +17,7 @@ jobs:
         export ARCH=${{ matrix.arch }}
         ./docker_run.sh ./import-src.sh
         ./docker_build.sh
+        ./docker_run.sh ./strip.sh
         ./pack.sh
     - uses: actions/upload-artifact@v2
       with:
