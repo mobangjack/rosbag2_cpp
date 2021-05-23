@@ -2,21 +2,13 @@
 
 cd $(dirname $0)
 
-# android build configuration
-if [ -z "$ANDROID_ABI" ]; then
-    export ANDROID_ABI=armeabi-v7a
+# build configuration
+if [ -z "$ARCH" ]; then
+    export ARCH=arm
 fi
 
-if [ -z "$ANDROID_NATIVE_API_LEVEL" ]; then
-    if [ "$ANDROID_ABI" == "armeabi-v7a" ]; then
-        export ANDROID_NATIVE_API_LEVEL=23
-    else
-        export ANDROID_NATIVE_API_LEVEL=28
-    fi
-fi
-
-build_base="$PWD/build/$ANDROID_ABI"
-install_base="$PWD/install/$ANDROID_ABI"
+build_base="$PWD/build/$ARCH"
+install_base="$PWD/install/$ARCH"
 
 sed_append() {
     ref="$1"
@@ -61,11 +53,7 @@ colcon build \
     --cmake-args \
         --no-warn-unused-cli \
         -DPYTHON_EXECUTABLE=/usr/bin/python3 \
-        -DCMAKE_TOOLCHAIN_FILE="${ANDROID_NDK}/build/cmake/android.toolchain.cmake" \
-        -DANDROID_NATIVE_API_LEVEL=${ANDROID_NATIVE_API_LEVEL} \
-        -DANDROID_ABI="${ANDROID_ABI}" \
-        -DANDROID_NDK="${ANDROID_NDK}" \
-        -DANDROID_STL=c++_static \
+        -DCMAKE_TOOLCHAIN_FILE="${PWD}/custom.toolchain.cmake" \
         -DBUILD_TESTING:BOOL=OFF \
         -DBUILD_SHARED_LIBS:BOOL=ON \
         -DCMAKE_FIND_ROOT_PATH="$install_base"

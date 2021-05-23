@@ -6,19 +6,19 @@ jobs:
   build-all:
     strategy:
       matrix:
-        android-abi: [armeabi-v7a, arm64-v8a]
+        arch: [arm, arm64]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - name: docker login
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-    - name: build ${{ matrix.android-abi }}
+    - name: build ${{ matrix.arch }}
       run: |
-        export ANDROID_ABI=${{ matrix.android-abi }}
+        export ARCH=${{ matrix.arch }}
         ./docker_run.sh ./import-src.sh
         ./docker_build.sh
         ./pack.sh
     - uses: actions/upload-artifact@v2
       with:
-        name: librosbag2-dev-${{ matrix.android-abi }}
-        path: release/${{ matrix.android-abi }}/librosbag2-dev-${{ matrix.android-abi }}.tar.gz
+        name: librosbag2-dev-${{ matrix.arch }}
+        path: release/${{ matrix.arch }}/librosbag2-dev-${{ matrix.arch }}.tar.gz

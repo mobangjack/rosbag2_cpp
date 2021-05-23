@@ -3,19 +3,19 @@
 set -e
 set -x
 
-if [ -z "$ANDROID_ABI" ]; then
-    export ANDROID_ABI="armeabi-v7a"
+if [ -z "$ARCH" ]; then
+    export ARCH="arm"
 fi
 
-install_base="$PWD/install/$ANDROID_ABI"
+install_base="$PWD/install/$ARCH"
 
 pushd "$install_base"
-tar -cfz "librosbag2-dev-${ANDROID_ABI}.tar.gz" *
+tar -cfz "librosbag2-dev-${ARCH}.tar.gz" *
 popd
 
-release_dir="$PWD/release/$ANDROID_ABI"
+release_dir="$PWD/release/$ARCH"
 if [ ! -d "$release_dir" ]; then
     mkdir -p "$release_dir"
 fi
 
-mv "$install_base/librosbag2-dev-${ANDROID_ABI}.tar.gz" "$release_dir/"
+mv "$install_base/librosbag2-dev-${ARCH}.tar.gz" "$release_dir/"
