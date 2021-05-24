@@ -15,7 +15,6 @@ jobs:
     - name: build ${{ matrix.arch }}
       run: |
         export ARCH=${{ matrix.arch }}
-        source /etc/profile
         ./docker_run.sh ./import-src.sh
         ./docker_build.sh
         ./docker_run.sh ./strip.sh
