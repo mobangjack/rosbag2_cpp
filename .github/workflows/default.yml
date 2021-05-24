@@ -8,14 +8,14 @@ jobs:
       matrix:
         arch: [arm, arm64]
     runs-on: ubuntu-latest
-    env:
-      ARCH: ${{ matrix.arch }}
     steps:
     - uses: actions/checkout@v2
     - name: docker login
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
     - name: build ${{ matrix.arch }}
       run: |
+        export ARCH=${{ matrix.arch }}
+        source /etc/profile
         ./docker_run.sh ./import-src.sh
         ./docker_build.sh
         ./docker_run.sh ./strip.sh
