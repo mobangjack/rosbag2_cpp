@@ -2,6 +2,9 @@
 
 cd $(dirname $0)
 
+set -e
+set -x
+
 if [ -z "${ANDROID_NDK}" ]; then
     echo "ENV{ANDROID_NDK} is not set"
     exit 1
@@ -12,12 +15,9 @@ if [ -z "$ARCH" ]; then
 fi
 
 arch=$ARCH
-if [ "$ARCH" == "arm64" ]; then
+if [ "$arch" == "arm64" ]; then
     arch="aarch64"
 fi
-
-set -e
-set -x
 
 install_base="$PWD/install/$ARCH"
 strip="${ANDROID_NDK}/toolchains/llvm/prebuilt/linux-x86_64/${arch}-linux-androideabi/bin/strip"

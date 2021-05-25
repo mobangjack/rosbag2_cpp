@@ -31,4 +31,4 @@ fi
 image=mobangjack/colcon-ndk:latest
 
 set -x
-docker run -v $PWD:$PWD $option $image bash -c "$cmd"
+docker run -v $PWD:$PWD -e ARCH=${ARCH} $option $image bash -c "$cmd"
